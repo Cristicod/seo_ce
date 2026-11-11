@@ -1,13 +1,25 @@
 // =============================================================================
-// AUTOPIESE PRO — JavaScript Modern, Fără Dependențe Externe (Vanilla JS)
-// Optimizat pentru Core Web Vitals (INP, LCP, CLS), Dwell Time & Live Search
-// Tehnologii: <dialog> HTML5 nativ, AbortController, Debounce, Navigation API
+// AUTOPIESE PRO — JAVASCRIPT VANILLA & CORE WEB VITALS
+// =============================================================================
+// ROL TEHNIC:
+// 1. Zero Dependențe Externe (Vanilla JS): nu folosim jQuery sau framework-uri greoaie,
+//    asigurând o latență minimă de execuție pe firul principal (Main Thread).
+// 2. Optimizare INP (Interaction to Next Paint < 50ms): interacțiunile la tastare
+//    și click pe galerie sunt non-blocante.
+// 3. Măsurare Dwell Time: monitorizează secundele petrecute pe pagină pentru SEO.
+// 4. Căutare Inteligentă cu Debounce & AbortController: previne cererile concurente.
+// 5. Galerie Foto & Lightbox integrat cu elementul nativ <dialog> HTML5.
 // =============================================================================
 
+// =============================================================================
 // 1. DWELL TIME & METRICI DE VITEZĂ PENTRU SEO
+// =============================================================================
+// Dwell Time măsoară intervalul în care vizitatorul explorează conținutul paginii.
+// Un timp mai mare indică algoritmilor Google că pagina satisface intenția de căutare.
 const startTime = Date.now();
 const timerEl = document.getElementById('dwell-timer');
 
+// Actualizare contor vizual în fiecare secundă
 if (timerEl) {
     setInterval(() => {
         const sec = Math.round((Date.now() - startTime) / 1000);
@@ -15,13 +27,15 @@ if (timerEl) {
     }, 1000);
 }
 
+// Salvare automată a timpului petrecut în localStorage la părăsirea paginii
 window.addEventListener('beforeunload', () => {
     const sec = Math.round((Date.now() - startTime) / 1000);
     localStorage.setItem('dwellTime_' + location.pathname, sec);
 });
 
+// La finalizarea încărcării paginii: extragem metricile reale din browser
 window.addEventListener('load', () => {
-    // Core Web Vitals folosind PerformanceNavigationTiming modern
+    // Folosim PerformanceNavigationTiming (API modern standard W3C)
     if (window.performance) {
         const navEntries = performance.getEntriesByType('navigation');
         if (navEntries.length > 0) {
@@ -40,7 +54,7 @@ window.addEventListener('load', () => {
         }
     }
 
-    // Inițializări componente
+    // Inițializare componente interactive
     initProductGallery();
     initLiveSearch();
 });
@@ -67,7 +81,7 @@ function initProductGallery() {
 
     if (!mainImg || !thumbButtons.length) return;
 
-    // Colectare imagini din atributele data- ale thumbnail-urilor
+    // Extragem lista de 3 imagini din atributele data- ale thumbnail-urilor
     const images = Array.from(thumbButtons).map(btn => ({
         src: btn.getAttribute('data-full'),
         alt: btn.getAttribute('data-alt') || '',
@@ -76,10 +90,14 @@ function initProductGallery() {
 
     let currentIndex = 0;
 
+    /**
+     * Schimbă imaginea activă atât în cardul principal, cât și în starea butoanelor
+     */
     function setActiveImage(index, updateFocus = false) {
         if (index < 0 || index >= images.length) return;
         currentIndex = index;
 
+        // Tranziție de opacitate fină fără flicker
         mainImg.style.opacity = '0.3';
         setTimeout(() => {
             mainImg.src = images[currentIndex].src;
@@ -95,6 +113,7 @@ function initProductGallery() {
         });
     }
 
+    // Evenimente pe thumbnail-uri (click și navigare cu săgeți)
     thumbButtons.forEach((btn, index) => {
         btn.addEventListener('click', () => setActiveImage(index));
         btn.addEventListener('keydown', (e) => {
@@ -106,7 +125,9 @@ function initProductGallery() {
         });
     });
 
-    // Deschiderea Lightbox folosind dialog.showModal() HTML5 nativ
+    /**
+     * Deschiderea ferestrei mărite folosind API-ul nativ dialog.showModal()
+     */
     function openLightbox(index) {
         if (!lightbox || !lbImg) return;
         currentIndex = index;
@@ -117,10 +138,13 @@ function initProductGallery() {
         } else {
             lightbox.setAttribute('open', '');
         }
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Blochează scroll-ul paginii din fundal
         if (lbClose) lbClose.focus();
     }
 
+    /**
+     * Închiderea ferestrei mărite folosind API-ul nativ dialog.close()
+     */
     function closeLightbox() {
         if (!lightbox) return;
         if (typeof lightbox.close === 'function') {
@@ -132,6 +156,9 @@ function initProductGallery() {
         if (mainBox) mainBox.focus();
     }
 
+    /**
+     * Actualizează conținutul (imagine, titlu, contor 1/3) din lightbox
+     */
     function updateLightboxContent() {
         const item = images[currentIndex];
         if (!item) return;
@@ -178,7 +205,7 @@ function initProductGallery() {
     if (lbNext)  lbNext.addEventListener('click', nextImage);
     if (lbPrev)  lbPrev.addEventListener('click', prevImage);
 
-    // Închidere nativă a dialogului la cancel (Escape) sau click pe backdrop
+    // Închidere nativă a dialogului la cancel (Escape) sau la click pe fundalul ::backdrop
     if (lightbox) {
         lightbox.addEventListener('cancel', () => {
             document.body.style.overflow = '';
@@ -198,7 +225,7 @@ function initProductGallery() {
 }
 
 // =============================================================================
-// 3. COȘ PIESE AUTO
+// 3. COȘ PIESE AUTO (INTERACȚIUNE UI & TOAST NOTIFICATION)
 // =============================================================================
 let cartCount = 0;
 const cartBadge = document.getElementById('cart-count');
@@ -219,6 +246,12 @@ function addToCart(name) {
 // =============================================================================
 // 4. BARĂ DE CĂUTARE INTELIGENTĂ CU AUTOCOMPLETE LIVE
 // =============================================================================
+// CARACTERISTICI:
+// - Debounce 100ms: reduce apelurile de rețea.
+// - AbortController: anulează cererile precedente încă neterminate la tastare rapidă.
+// - Navigare Tastatură: Săgeți Sus/Jos, Enter pentru confirmare, Escape pentru anulare.
+// - Highlight Galben: evidențiază termenul căutat în denumire și cod.
+// =============================================================================
 function initLiveSearch() {
     const searchInputs = document.querySelectorAll('.ap-search-input');
     if (!searchInputs.length) return;
@@ -235,6 +268,7 @@ function initLiveSearch() {
 
         if (!dropdown) return;
 
+        // Afișează butonul de ștergere rapidă (X) doar când există text introdus
         const toggleClearBtn = () => {
             if (clearBtn) {
                 clearBtn.style.display = input.value.trim().length > 0 ? 'flex' : 'none';
@@ -251,7 +285,7 @@ function initLiveSearch() {
             });
         }
 
-        // Debounce scurt (100ms) pentru latență ultra-redusă (INP < 50ms)
+        // Declanșare căutare la tastare cu debounce scurt de 100ms
         input.addEventListener('input', () => {
             toggleClearBtn();
             clearTimeout(debounceTimer);
@@ -268,13 +302,14 @@ function initLiveSearch() {
             }, 100);
         });
 
+        // La refocalizarea inputului, redeschide dropdown-ul dacă există deja rezultate
         input.addEventListener('focus', () => {
             if (input.value.trim().length >= 2 && dropdown.children.length > 0) {
                 dropdown.classList.add('active');
             }
         });
 
-        // Navigare cu tastatura în dropdown
+        // Navigare accesibilă cu tastatura în lista de rezultate
         input.addEventListener('keydown', (e) => {
             if (!dropdown.classList.contains('active')) return;
             const items = dropdown.querySelectorAll('.ap-search-item');
@@ -307,8 +342,12 @@ function initLiveSearch() {
             });
         }
 
+        /**
+         * Interoghează endpoint-ul REST JSON folosind AbortController
+         */
         async function fetchResults(query, dd, inp) {
             try {
+                // Anulează cererea precedentă aflată în tranzit pentru a preveni race conditions
                 if (abortCtrl) abortCtrl.abort();
                 abortCtrl = new AbortController();
 
@@ -326,12 +365,16 @@ function initLiveSearch() {
         }
     });
 
+    // Închide dropdown-ul dacă utilizatorul dă click în afara barei de căutare
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.ap-search-wrapper')) {
             document.querySelectorAll('.ap-search-dropdown').forEach(dd => dd.classList.remove('active'));
         }
     });
 
+    /**
+     * Randează HTML-ul dropdown-ului cu rezultate
+     */
     function renderDropdown(items, query, dropdown, input) {
         dropdown.innerHTML = '';
 
@@ -367,6 +410,7 @@ function initLiveSearch() {
             dropdown.appendChild(a);
         });
 
+        // Link suplimentar la finalul listei pentru căutare completă
         const footer = document.createElement('div');
         footer.className = 'ap-search-footer';
         footer.innerHTML = `Apasă Enter pentru a vedea toate rezultatele pentru "<strong>${escapeHtml(query)}</strong>" →`;
@@ -379,12 +423,18 @@ function initLiveSearch() {
         dropdown.classList.add('active');
     }
 
+    /**
+     * Previne vulnerabilitățile XSS prin scăparea caracterelor speciale
+     */
     function escapeHtml(str) {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
+    /**
+     * Evidențiază termenul potrivit cu tagul <mark>
+     */
     function highlightMatch(text, query) {
         if (!query) return escapeHtml(text);
         const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');

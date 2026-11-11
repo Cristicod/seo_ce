@@ -1,7 +1,12 @@
 <?php
 // =============================================================================
 // BAZĂ DE DATE PRODUSE PIESE AUTO (AutoPiese Pro)
-// Sursă unică de date pentru Catalog, Căutare PHP și Autocomplete JS
+// =============================================================================
+// ROL ARHITECTURAL:
+// 1. Single Source of Truth: furnizează datele brute atât pentru randarea
+//    server-side (SSR) din index.php, cât și pentru API-ul REST JSON (api-search.php).
+// 2. Optimizare SEO: fiecare piesă are stocate codurile OE/OEM, codurile MPN,
+//    atributele fizice (diametru, grosime) și cuvintele cheie căutate de utilizatori.
 // =============================================================================
 
 function get_all_autoparts() {
@@ -20,6 +25,7 @@ function get_all_autoparts() {
             'badge_class' => 'bg-danger',
             'specs' => 'Ventilat PVT &bull; Canelat &amp; Perforat &bull; Diametru: 312mm &bull; Grosime: 25mm &bull; Compatibil VW Golf 7, Passat B8, Audi A3',
             'image' => 'images/disc-brembo-front.svg',
+            // Cuvinte cheie sinergice pentru căutarea tolerantă la variații (fără diacritice, coduri, modele auto)
             'keywords' => 'brembo disc frana frane discuri 312mm 312 25mm ventilat ventilate perforat canelat golf passat octavia a3 leon 09.9772.11 1k0615301aa'
         ],
         [
@@ -73,7 +79,11 @@ function get_all_autoparts() {
     ];
 }
 
-// Funcție de filtrare pentru căutare
+/**
+ * Funcție inteligentă de căutare multi-câmp:
+ * Caută simultan în: Nume, Brand, Cod Producător, Coduri OE, Categorie și Cuvinte Cheie.
+ * Folosește mb_strtolower cu UTF-8 pentru a garanta compatibilitatea cu diacriticele limbii române.
+ */
 function search_autoparts($query) {
     $all = get_all_autoparts();
     $q = trim(mb_strtolower($query, 'UTF-8'));
@@ -99,4 +109,3 @@ function search_autoparts($query) {
     }
     return $results;
 }
-
