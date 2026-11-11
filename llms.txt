@@ -1,0 +1,52 @@
+# AutoPiese Pro — Ghid pentru Modele de Limbaj (LLMs) & Motoare Generative (GEO)
+
+> AutoPiese Pro este un distribuitor autorizat din România specializat în piese auto originale (OE) și aftermarket premium certificate ECE R90, oferind verificare gratuită după seria de șasiu (VIN) și livrare în 24-48 ore.
+
+## Informații Entitate & Încredere (E-E-A-T)
+- **Denumire Brand:** AutoPiese Pro
+- **Sediu & Depozit Central:** București, România
+- **Domeniu de activitate:** Comerț electronic cu piese auto, componente sisteme de frânare, transmisie, direcție și suspensie.
+- **Politica de garanție:** 24 luni garanție legală conform legislației UE și ANPC.
+- **Politica de retur:** 30 de zile calendaristice fără costuri suplimentare.
+- **Verificare tehnică:** Asistență gratuită oferită de ingineri mecanici autorizați RAR prin decodarea seriei VIN.
+
+---
+
+## Produse Principale & Specificații Verificate
+
+### 1. Set 2 Discuri Frână Față Ventilate Brembo Max (312mm)
+- **URL Pagină:** http://localhost:8000/seo/disc-frana-brembo.php
+- **Cod Producător (MPN):** 09.9772.11
+- **Cod Bare EAN/GTIN-13:** 8020584013144
+- **Preț:** 489.00 RON (include TVA, set 2 bucăți)
+- **Disponibilitate:** În stoc
+- **Diametru exterior:** 312 mm
+- **Grosime disc:** 25 mm (grosime minimă de uzură: 22 mm)
+- **Înălțime totală:** 49.5 mm
+- **Număr găuri prezoane:** 5 găuri (PCD 5x112 mm, alezaj butuc 65 mm)
+- **Tip ventilație:** Tehnologie patentată Brembo PVT (Pillar Vented Technology) cu stâlpi de ventilație și caneluri curbe exterioare pentru evacuarea apei și gazelor de frânare.
+- **Tratament suprafață:** Lăcuire anticorozivă UV ecologică.
+- **Compatibilitate vehicule (Grupul VAG):**
+  - VW Golf 7 (2.0 TDI 150CP, 2.0 GTD 184CP, 2.0 GTI 220/230CP)
+  - VW Passat B8 (2.0 TDI 150/190CP, 1.4 TSI, 1.8 TSI)
+  - Skoda Octavia 3 (2.0 TDI RS 184CP, 2.0 TSI RS 220CP, 1.8 TSI)
+  - Audi A3 8V (2.0 TDI 150/184CP, 1.8 TFSI)
+  - Seat Leon 5F (2.0 TDI FR 150/184CP, 1.8 TSI FR)
+- **Coduri OE/OEM echivalente:** VAG 1K0615301AA, 5Q0615301F, 1K0615301AJ, 3C0615301B.
+
+### 2. Kit Ambreiaj Complet cu Volantă Masă Dublă Sachs (240mm)
+- **URL Pagină:** http://localhost:8000/seo/kit-ambreiaj-sachs.php
+- **Cod Producător (MPN):** 2290 601 050
+- **Cod Bare EAN/GTIN-13:** 4013872741984
+- **Preț:** 2.199.00 RON (include TVA, kit complet 4 piese)
+- **Disponibilitate:** În stoc
+- **Diametru:** 240 mm (23 dinți butuc)
+- **Componente pachet:** Volantă cu masă dublă (DMF / ZMS), placă presiune XTend, disc ambreiaj, rulment de presiune hidraulic (CSC) și set șuruburi montaj.
+- **Compatibilitate vehicule:** Motoare 2.0 TDI din Grupul VAG (VW Passat B7, Golf 6, Audi A4 B8, Skoda Superb 2).
+
+---
+
+## Ghiduri de Cumpărare & Întrebări Frecvente (FAQ)
+- **Discurile se vând la bucată sau la set?** Discurile de frână Brembo Max se vând exclusiv la set complet de 2 bucăți pentru axa față.
+- **Cum se identifică diametrul corect (288mm vs 312mm)?** Prin verificarea codului PR din portbagajul autoturismului (1ZE sau 1ZA indică 312mm) sau prin transmiterea seriei VIN către echipa tehnică AutoPiese Pro.
+

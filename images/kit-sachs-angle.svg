@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="clutchAngGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="clutchAngShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="-10" dy="25" stdDeviation="30" flood-color="#0f172a" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f1f5f9"/>
+  <ellipse cx="600" cy="720" rx="440" ry="60" fill="#000" opacity="0.2" filter="blur(20px)"/>
+
+  <g filter="url(#clutchAngShadow)">
+    <!-- Pressure plate outer housing in perspective -->
+    <ellipse cx="600" cy="520" rx="400" ry="160" fill="url(#clutchAngGrad)" stroke="#1d4ed8" stroke-width="3"/>
+    <ellipse cx="600" cy="520" rx="385" ry="150" fill="#1e293b"/>
+
+    <!-- Spring fingers in perspective -->
+    <ellipse cx="600" cy="520" rx="280" ry="110" fill="#334155" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Clutch Disc Face in perspective -->
+    <ellipse cx="600" cy="510" rx="200" ry="80" fill="#27272a" stroke="#f59e0b" stroke-width="2.5"/>
+
+    <!-- Torsion Springs in perspective -->
+    <ellipse cx="600" cy="460" rx="25" ry="10" fill="#f59e0b"/>
+    <ellipse cx="740" cy="510" rx="10" ry="20" fill="#f59e0b"/>
+    <ellipse cx="600" cy="560" rx="25" ry="10" fill="#f59e0b"/>
+    <ellipse cx="460" cy="510" rx="10" ry="20" fill="#f59e0b"/>
+
+    <!-- Center spline bore -->
+    <ellipse cx="600" cy="510" rx="50" ry="20" fill="#020617" stroke="#cbd5e1" stroke-width="2"/>
+    <ellipse cx="600" cy="510" rx="35" ry="14" fill="#000000"/>
+  </g>
+
+  <g transform="translate(60, 60)">
+    <rect width="300" height="42" rx="8" fill="#0f172a" opacity="0.92"/>
+    <text x="16" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="700" fill="#3b82f6">Vedere Unghi (Mecanism Ambreiaj)</text>
+  </g>
+</svg>
+

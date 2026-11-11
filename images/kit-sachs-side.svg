@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="clutchSideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <filter id="clutchSideShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="25" stdDeviation="30" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f1f5f9"/>
+  <ellipse cx="600" cy="620" rx="460" ry="25" fill="#000" opacity="0.2" filter="blur(16px)"/>
+
+  <g filter="url(#clutchSideShadow)">
+    <!-- Dual-Mass Flywheel Layer (Volanta cu masa dubla) -->
+    <rect x="200" y="520" width="800" height="40" rx="4" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+    <!-- Gear Ring Teeth (Coroana dințată pentru electromotor) -->
+    <g fill="#94a3b8">
+      <rect x="200" y="522" width="6" height="36"/>
+      <rect x="215" y="522" width="6" height="36"/>
+      <rect x="230" y="522" width="6" height="36"/>
+      <rect x="965" y="522" width="6" height="36"/>
+      <rect x="980" y="522" width="6" height="36"/>
+      <rect x="994" y="522" width="6" height="36"/>
+    </g>
+
+    <!-- Clutch Disc Layer (Discul de ambreiaj) -->
+    <rect x="240" y="490" width="720" height="18" rx="2" fill="#27272a" stroke="#f59e0b" stroke-width="1.5"/>
+
+    <!-- Pressure Plate Layer (Placa de presiune) -->
+    <path d="M 220 480 
+             L 280 430 
+             L 920 430 
+             L 980 480 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+
+    <!-- Release Bearing / Rulment Presiune Hidraulic -->
+    <rect x="520" y="360" width="160" height="55" rx="6" fill="#1e293b" stroke="#cbd5e1" stroke-width="2"/>
+    <circle cx="600" cy="387" r="18" fill="#020617"/>
+  </g>
+
+  <!-- Spec Callout Cote -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" stroke="#3b82f6" stroke-width="1.8">
+    <line x1="200" y1="580" x2="1000" y2="580"/>
+    <polygon points="200,580 215,575 215,585" fill="#3b82f6"/>
+    <polygon points="1000,580 985,575 985,585" fill="#3b82f6"/>
+    <rect x="520" y="560" width="160" height="40" rx="6" fill="#0f172a"/>
+    <text x="600" y="585" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" stroke="none">Ø 240 mm (Diametru)</text>
+  </g>
+
+  <g transform="translate(60, 60)">
+    <rect width="320" height="42" rx="8" fill="#0f172a" opacity="0.92"/>
+    <text x="16" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="700" fill="#3b82f6">Profil Ansamblu Ambreiaj + Volantă</text>
+  </g>
+</svg>
+

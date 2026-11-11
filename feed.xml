@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>AutoPiese Pro — Feed Oficial Produse Google Merchant Center</title>
+    <link>http://localhost:8000/seo/index.php</link>
+    <description>Feed de date produse sincronizat pentru listări gratuite Google Shopping și Asistenți AI de Cumpărături</description>
+
+    <!-- PRODUS 1: Discuri Frână Brembo Max -->
+    <item>
+      <g:id>BREMBO-09.9772.11</g:id>
+      <g:title>Set 2 Discuri Frână Față Ventilate Brembo Max (312mm) — Cod 09.9772.11</g:title>
+      <g:description>Set 2 discuri de frână sport Brembo Max ventilate și canelate, diametru 312mm, grosime 25mm, 5 prezoane (5x112). Tratament anticoroziv UV, compatibil VW Golf 7, Passat B8, Skoda Octavia 3, Audi A3.</g:description>
+      <g:link>http://localhost:8000/seo/disc-frana-brembo.php</g:link>
+      <g:image_link>http://localhost:8000/seo/images/disc-brembo-front.svg</g:image_link>
+      <g:additional_image_link>http://localhost:8000/seo/images/disc-brembo-angle.svg</g:additional_image_link>
+      <g:additional_image_link>http://localhost:8000/seo/images/disc-brembo-side.svg</g:additional_image_link>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>489.00 RON</g:price>
+      <g:brand>Brembo</g:brand>
+      <g:gtin>8020584013144</g:gtin>
+      <g:mpn>09.9772.11</g:mpn>
+      <g:google_product_category>Vehicles &amp; Parts &gt; Vehicle Parts &amp; Accessories &gt; Motor Vehicle Braking &gt; Motor Vehicle Brake Rotors</g:google_product_category>
+      <g:product_type>Piese Auto &gt; Sistem Frânare &gt; Discuri de Frână</g:product_type>
+      <g:shipping>
+        <g:country>RO</g:country>
+        <g:service>Curier Rapid 24h</g:service>
+        <g:price>0.00 RON</g:price>
+      </g:shipping>
+    </item>
+
+    <!-- PRODUS 2: Kit Ambreiaj Sachs -->
+    <item>
+      <g:id>SACHS-2290601050</g:id>
+      <g:title>Kit Ambreiaj Complet cu Volantă Masă Dublă Sachs (240mm) — Cod 2290 601 050</g:title>
+      <g:description>Kit ambreiaj complet Sachs cu volantă bimasa (DMF), placă de presiune XTend, disc ambreiaj 240mm (23 dinți), rulment presiune hidraulic CSC și set șuruburi. Compatibil motoare 2.0 TDI Grupul VAG.</g:description>
+      <g:link>http://localhost:8000/seo/kit-ambreiaj-sachs.php</g:link>
+      <g:image_link>http://localhost:8000/seo/images/kit-sachs-front.svg</g:image_link>
+      <g:additional_image_link>http://localhost:8000/seo/images/kit-sachs-angle.svg</g:additional_image_link>
+      <g:additional_image_link>http://localhost:8000/seo/images/kit-sachs-side.svg</g:additional_image_link>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>2199.00 RON</g:price>
+      <g:brand>Sachs</g:brand>
+      <g:gtin>4013872741984</g:gtin>
+      <g:mpn>2290 601 050</g:mpn>
+      <g:google_product_category>Vehicles &amp; Parts &gt; Vehicle Parts &amp; Accessories &gt; Motor Vehicle Drivetrain &gt; Clutch Parts</g:google_product_category>
+      <g:product_type>Piese Auto &gt; Transmisie &gt; Kituri Ambreiaj</g:product_type>
+      <g:shipping>
+        <g:country>RO</g:country>
+        <g:service>Curier Rapid 24h</g:service>
+        <g:price>0.00 RON</g:price>
+      </g:shipping>
+    </item>
+  </channel>
+</rss>
+

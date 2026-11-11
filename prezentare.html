@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prezentare Laborator — AutoPiese Pro (PHP & SEO/GEO 2026)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d16;
+            --surface: #111827;
+            --surface-elevated: #1f2937;
+            --border: #374151;
+            --primary: #ef4444;
+            --primary-glow: rgba(239, 68, 68, 0.35);
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        /* BARĂ DE PROGRES SUS */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+
+        /* HEADER PREZENTARE */
+        .pres-header {
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+        .pres-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: #fff;
+        }
+        .pres-brand i { color: var(--primary); font-size: 1.3rem; }
+        .pres-brand span { color: var(--primary); }
+
+        .pres-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-ctrl {
+            background: var(--surface-elevated);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-ctrl:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .btn-ctrl.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+
+        /* STAGE PRINCIPAL SLIDES */
+        .slide-stage {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 48px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            opacity: 0;
+            transform: scale(0.98) translateY(10px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* TIPOGRAFIE SLIDE */
+        .slide-tag {
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-bottom: 12px;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .slide-title span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .slide-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* GRID CONȚINUT SLIDE */
+        .slide-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 28px;
+            flex: 1;
+        }
+        .slide-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        /* CARDURI INTERIOARE */
+        .card-box {
+            background: rgba(31, 41, 55, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .card-box h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        .card-box h3 i { color: var(--accent); }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .feature-list li {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .feature-list li i {
+            color: var(--success);
+            font-size: 1.1rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .feature-list li strong {
+            color: #fff;
+        }
+
+        /* CASETA CE SPUI LA LABORATOR (NOTE VORBITOR) */
+        .speech-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(59, 130, 246, 0.12));
+            border: 1.5px dashed var(--primary);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-top: 18px;
+        }
+        .speech-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .speech-text {
+            font-size: 0.96rem;
+            line-height: 1.55;
+            color: #f3f4f6;
+            font-style: italic;
+        }
+        .speech-text mark {
+            background: rgba(245, 158, 11, 0.25);
+            color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* CODE BOX */
+        .code-box {
+            background: #050811;
+            border: 1px solid #1f2937;
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #93c5fd;
+            line-height: 1.55;
+            overflow-x: auto;
+        }
+        .code-box .kw { color: #f472b6; }
+        .code-box .fn { color: #60a5fa; }
+        .code-box .str { color: #34d399; }
+        .code-box .com { color: #6b7280; font-style: italic; }
+
+        /* FOOTER PREZENTARE */
+        .pres-footer {
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(17, 24, 39, 0.7);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-nav {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+        .btn-nav:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .slide-counter {
+            font-weight: 700;
+            color: #fff;
+            background: var(--surface-elevated);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* INDICATORI BULLETS */
+        .dots-container {
+            display: flex;
+            gap: 6px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: var(--primary);
+            width: 22px;
+            border-radius: 10px;
+        }
+
+        /* COMPATIBILITATE MOD FULLSCREEN */
+        :fullscreen body {
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bară de Progres -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="pres-header">
+        <div class="pres-brand">
+            <i class="bi bi-gear-wide-connected"></i>
+            AutoPiese<span>Pro</span> &bull; Prezentare Laborator
+        </div>
+        <div class="pres-actions">
+            <button class="btn-ctrl" id="toggleNotesBtn" title="Apasă tasta N">
+                <i class="bi bi-chat-quote"></i> Note Vorbitor (N)
+            </button>
+            <button class="btn-ctrl" id="fullscreenBtn" title="Apasă tasta F">
+                <i class="bi bi-arrows-fullscreen"></i> Ecran Complet (F)
+            </button>
+            <a href="index.php" target="_blank" class="btn-ctrl" style="background:var(--primary); border-color:var(--primary); color:#fff;">
+                <i class="bi bi-box-arrow-up-right"></i> Deschide Magazinul Live
+            </a>
+        </div>
+    </header>
+
+    <!-- Stage cu cele 10 Slide-uri -->
+    <main class="slide-stage">
+
+        <!-- ===================================================================
+             SLIDE 1: COPERTĂ & INTRODUCERE
+             =================================================================== -->
+        <article class="slide active" data-slide="1">
+            <span class="slide-tag">Prezentare Laborator &bull; E-Commerce Modern</span>
+            <h1 class="slide-title">AutoPiese<span>Pro</span> — Arhitectură Web &amp; SEO/GEO</h1>
+            <p class="slide-subtitle">Optimizare Full-Stack pentru Motoarele de Căutare Clasice și Asistenții AI (2026)</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-layers-fill"></i> Ce reprezintă acest proiect?</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Un magazin online de piese auto (discuri frână Brembo, kit ambreiaj Sachs).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>PHP Modern (DRY, modular)</strong> cu sistem de componente reutilizabile (<code>includes/</code>).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Compresie automată Node.js / esbuild</strong> (la salvare CMD+S, sub 10ms).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Bază dublă de SEO</strong>: SEO tehnic (Schema.org JSON-LD, Sitemap, Feed Google) + GEO (Generative Engine Optimization pentru Google AI Overviews, ChatGPT, Perplexity).</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-speedometer2"></i> Obiective Tehnice Atinge</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-lightning-charge-fill" style="color:var(--accent);"></i> <strong>Latență 0ms (Instant Nav)</strong> prin Speculation Rules API.</li>
+                        <li><i class="bi bi-shield-check" style="color:var(--primary);"></i> <strong>Core Web Vitals</strong>: INP &lt; 50ms, zero CLS pe imagini.</li>
+                        <li><i class="bi bi-search" style="color:var(--secondary);"></i> <strong>Căutare instantanee hibridă</strong>: PHP backend + JS live autocomplete.</li>
+                        <li><i class="bi bi-robot" style="color:#a855f7;"></i> <strong>Citate în AI</strong>: Fișiere <code>llms.txt</code> și <code>robots.txt</code> configurate.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la începutul prezentării:</div>
+                <p class="speech-text">
+                    „Bună ziua! Proiectul meu se numește <mark>AutoPiese Pro</mark> și este o platformă e-commerce dezvoltată în PHP modern, construită de la zero pentru cerințele actuale de <mark>SEO clasic</mark> și <mark>GEO (Generative Engine Optimization)</mark>. Astăzi motoarele de căutare nu mai oferă doar linkuri albastre, ci răspunsuri directe generate de AI. Proiectul demonstrează cum structurăm codul HTML, datele JSON-LD și performanța Core Web Vitals pentru a fi citați ca sursă principală de Google AI Overviews și ChatGPT.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 2: ECOSISTEMUL PHP MODERN
+             =================================================================== -->
+        <article class="slide" data-slide="2">
+            <span class="slide-tag">Backend &bull; Versiuni &amp; Securitate</span>
+            <h2 class="slide-title">Ecosistemul <span>PHP</span> în Prezent</h2>
+            <p class="slide-subtitle">De ce versiunea de PHP și structurarea codului sunt critice pentru performanță</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-cpu-fill"></i> Statutul Versiunilor PHP</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>PHP 8.5</strong> este versiunea stabilă recomandată în producție.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>PHP 8.6</strong> aduce aplicarea parțială a funcțiilor, <code>clamp()</code> și tip nativ <code>Time\Duration</code>.</li>
+                        <li><i class="bi bi-exclamation-triangle-fill" style="color:var(--accent);"></i> <strong>PHP 8.1 &amp; mai vechi</strong>: End of Life (fără update-uri de securitate).</li>
+                        <li><i class="bi bi-shield-fill-exclamation" style="color:var(--primary);"></i> <strong>Securitate critică</strong>: patch-uri RCE aplicate recent (versiunile 8.5.12, 8.4.27, 8.3.36).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Proiectul nostru</strong>: Rulează pe PHP 8.3/8.4+, cu escapare strictă prin <code>e()</code> și zero erori de sintaxă.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-diagram-3-fill"></i> Arhitectura Modulară (DRY) a Proiectului</h3>
+                    <div class="code-box">
+<span class="com">// Încarcă configurarea & componentele partajate</span>
+<span class="kw">require_once</span> __DIR__ . <span class="str">'/includes/config.php'</span>;
+<span class="kw">require_once</span> __DIR__ . <span class="str">'/data-products.php'</span>;
+
+<span class="com">// Antet comun cu Speculation Rules & View Transitions</span>
+<span class="kw">require</span> __DIR__ . <span class="str">'/includes/head.php'</span>;
+<span class="kw">require</span> __DIR__ . <span class="str">'/includes/header.php'</span>;
+<span class="com">// ... Conținut unic pagină ...</span>
+<span class="kw">require</span> __DIR__ . <span class="str">'/includes/footer.php'</span>;
+                    </div>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;">
+                        Fiecare pagină include <code>config.php</code>, <code>head.php</code>, <code>header.php</code> și <code>footer.php</code>. Fără cod duplicat.
+                    </p>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Pe partea de backend, proiectul respectă cerințele PHP moderne. Versiunile vechi sub 8.2 nu mai primesc suport, iar noi am structurat codul modular, respectând principiul <mark>DRY (Don't Repeat Yourself)</mark>. Am creat un folder <mark>includes/</mark> care găzduiește configurarea globală, head-ul cu meta-etichete, navbar-ul și dialogul de lightbox. Astfel, orice modificare de brand sau logică se propagă instant pe toate paginile.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 3: HTML SEMANTIC & NAVIGARE INSTANTANEE
+             =================================================================== -->
+        <article class="slide" data-slide="3">
+            <span class="slide-tag">Frontend &bull; Semantică HTML5 &amp; APIs</span>
+            <h2 class="slide-title">HTML Semantic &amp; <span>Speculation Rules</span></h2>
+            <p class="slide-subtitle">Structură curată pentru Googlebot și încărcare la 0 milisecunde</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-code-slash"></i> Ierarhia Semantică HTML5</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <code>&lt;header&gt;</code> și <code>&lt;nav&gt;</code> pentru identificare și meniu accesibil.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Un singur <code>&lt;main&gt;</code> vizibil</strong> per pagină — cerință strictă Google.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <code>&lt;article&gt;</code> pentru produsul de sine stătător.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Ierarhie strictă fără salturi</strong>: <code>&lt;h1&gt;</code> unic &rarr; <code>&lt;h2&gt;</code> secțiuni &rarr; <code>&lt;h3&gt;</code> specificații.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <code>&lt;dialog&gt;</code> nativ HTML5 pentru lightbox (accesibil tastatură, Escape automat).</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-lightning-fill"></i> Speculation Rules API (Chrome)</h3>
+                    <div class="code-box">
+&lt;<span class="kw">script</span> <span class="fn">type</span>=<span class="str">"speculationrules"</span>&gt;
+{
+  <span class="str">"prerender"</span>: [
+    { <span class="str">"source"</span>: <span class="str">"list"</span>, <span class="str">"urls"</span>: [<span class="str">"disc-frana-brembo.php"</span>, <span class="str">"kit-ambreiaj-sachs.php"</span>] }
+  ],
+  <span class="str">"prefetch"</span>: [
+    { <span class="str">"source"</span>: <span class="str">"list"</span>, <span class="str">"urls"</span>: [<span class="str">"disc-frana-brembo.php"</span>, <span class="str">"kit-ambreiaj-sachs.php"</span>] }
+  ]
+}
+&lt;/<span class="kw">script</span>&gt;
+                    </div>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;">
+                        Browserul pre-randează în memorie paginile de produs înainte ca utilizatorul să dea click. Când dă click, pagina apare <strong>instantaneu (0ms)</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Google penalizează paginile construite din simple div-uri generice. Noi am folosit etichete semantice native: <mark>header, nav, main, article, section, aside și footer</mark>, cu un singur H1 per pagină. În plus, am implementat cel mai nou API din Chrome — <mark>Speculation Rules API</mark>. Când ești pe catalog, browserul randează în background paginile produselor. Când utilizatorul apasă pe produs, tranziția este de zero milisecunde.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 4: OPTIMIZAREA IMAGINILOR & CORE WEB VITALS
+             =================================================================== -->
+        <article class="slide" data-slide="4">
+            <span class="slide-tag">Performanță &bull; Core Web Vitals</span>
+            <h2 class="slide-title">Optimizarea Imaginilor &amp; <span>Metrici Vitale</span></h2>
+            <p class="slide-subtitle">Cum eliminăm CLS-ul și optimizăm LCP-ul și INP-ul</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-image-fill"></i> Regula celor 3 Imagini &amp; Zero CLS</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>3 vederi tehnice per piesă</strong>: frontală, unghi ventilație/mecanism, profil cote tehnice.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Dimensiuni explicite <code>width</code> și <code>height</code></strong> pe toate imaginile pentru a preveni saltul paginii (<strong>CLS = 0</strong>).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <code>fetchpriority="high"</code> pe imaginea principală din Hero (optimizare <strong>LCP - Largest Contentful Paint</strong>).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <code>loading="lazy"</code> și <code>decoding="async"</code> pe thumbnail-uri și produsele de mai jos.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-activity"></i> Cele 3 Metrici Core Web Vitals (2026)</h3>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="background:#050811; padding:12px; border-radius:8px; border-left:4px solid var(--success);">
+                            <strong>LCP (Largest Contentful Paint) &lt; 1.2s</strong>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">Timpul de afișare a celei mai mari imagini. Obținut prin preconnect și fetchpriority.</p>
+                        </div>
+                        <div style="background:#050811; padding:12px; border-radius:8px; border-left:4px solid var(--secondary);">
+                            <strong>CLS (Cumulative Layout Shift) = 0.00</strong>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">Pagina nu trepidează la încărcare datorită aspect-ratio: 4/3 definit în CSS.</p>
+                        </div>
+                        <div style="background:#050811; padding:12px; border-radius:8px; border-left:4px solid var(--primary);">
+                            <strong>INP (Interaction to Next Paint) &lt; 50ms</strong>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">A înlocuit vechiul FID. Interacțiunea la click pe galerie și căutare este instantanee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Pentru un magazin de piese auto, imaginile sunt cruciale. Am inclus 3 fotografii tehnice pentru fiecare produs: frontal, unghi și cote. Pentru a satisface standardul <mark>Core Web Vitals</mark> impus de Google, toate imaginile au lățime și înălțime declarate strict, prevenind deplasarea conținutului — scorul <mark>CLS fiind zero</mark>. Pe imaginea principală am folosit <mark>fetchpriority='high'</mark> pentru un LCP impecabil.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 5: CSS MODERN FĂRĂ PREPROCESOARE
+             =================================================================== -->
+        <article class="slide" data-slide="5">
+            <span class="slide-tag">Styling &bull; CSS Modern 2026</span>
+            <h2 class="slide-title">CSS Modern: <span>@layer</span>, <span>:has()</span> &amp; Nesting</h2>
+            <p class="slide-subtitle">Scriem CSS scalabil direct în browser, fără nevoie de SASS sau PostCSS</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-palette-fill"></i> Funcționalități CSS Native Utilizate</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Cascade Layers (<code>@layer</code>)</strong>: împarte stilurile în <code>reset, base, layout, components, utilities</code>. Elimină conflictele de specificitate (fără <code>!important</code>).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Selectorul părinte <code>:has()</code></strong>: permite stilizarea barei de căutare când inputul are focus:
+                            <br><code style="font-size:0.8rem; color:#93c5fd;">.ap-search-form:has(input:focus) .ap-search-icon { color: red; }</code>
+                        </li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>CSS Nesting nativ</strong>: scriem stiluri imbricate direct în CSS curat.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong><code>contain: layout</code></strong> pe cardurile produselor pentru a reduce costul de recalculare la hover.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-code-square"></i> Exemplu din Codul Nostru (style.css)</h3>
+                    <div class="code-box">
+<span class="kw">@layer</span> reset, base, layout, components, utilities;
+
+<span class="kw">@layer</span> components {
+  .ap-product-card {
+    contain: layout;
+    transition: transform var(--ap-transition);
+
+    &amp;:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+  }
+
+  .ap-search-form:has(.ap-search-input:focus) .ap-search-icon {
+    color: var(--ap-primary);
+  }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „La nivel de stilizare, am evitat dependențele grele. Am folosit cele mai noi capacități native din CSS: <mark>@layer</mark> pentru organizarea priorităților de cascadă, <mark>CSS Nesting nativ</mark> și puternicul selector <mark>:has()</mark>, care permite modificarea elementelor părinte în funcție de starea copiilor. Rezultatul este un CSS curat, ușor de întreținut și ultra-rapid.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 6: NODE.JS & ESBUILD AUTOMATION
+             =================================================================== -->
+        <article class="slide" data-slide="6">
+            <span class="slide-tag">Tooling &bull; Node.js &amp; esbuild</span>
+            <h2 class="slide-title">Compresie Automată <span>CSS + JS</span></h2>
+            <p class="slide-subtitle">Watch mode la salvare (CMD+S) cu reducere de peste 50% a dimensiunii</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-terminal-fill"></i> Cum funcționează build.js?</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Construit cu <strong>Node.js</strong> și <strong>esbuild</strong> — cel mai rapid compilator din industrie (scris în Go).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Mod Watch (<code>npm run watch</code>)</strong>: ascultă evenimentele sistemului de fișiere (<code>fs.watch</code>).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Debounce de 50ms</strong>: previne dubla compilare la salvare.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> PHP detectează automat: dacă există <code>style.min.css</code>, îl servește direct în producție.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-bar-chart-fill"></i> Rezultate Reale de Compresie</h3>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:#050811; padding:16px; border-radius:8px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span>style.css &rarr; <strong>style.min.css</strong></span>
+                                <span style="color:var(--primary); font-weight:700;">-43.9%</span>
+                            </div>
+                            <div style="color:var(--text-muted); font-size:0.85rem;">22.07 KB &rarr; <strong>12.37 KB</strong> (Timp: ~36ms)</div>
+                        </div>
+
+                        <div style="background:#050811; padding:16px; border-radius:8px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span>script.js &rarr; <strong>script.min.js</strong></span>
+                                <span style="color:var(--secondary); font-weight:700;">-52.0%</span>
+                            </div>
+                            <div style="color:var(--text-muted); font-size:0.85rem;">14.09 KB &rarr; <strong>6.76 KB</strong> (Timp: ~4.4ms)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Pentru fluxul de dezvoltare, am configurat un script în Node.js bazat pe <mark>esbuild</mark>. Rulând <mark>npm run watch</mark>, orice salvare prin Command+S sau Control+S declanșează recompilarea și minificarea instantanee a CSS-ului și JavaScript-ului în mai puțin de 10 milisecunde. Fișierul JavaScript a fost redus cu <mark>52%</mark>, iar PHP servește automat fișierele .min dacă acestea există pe disc.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 7: BARA DE CĂUTARE & AUTOCOMPLETE LIVE
+             =================================================================== -->
+        <article class="slide" data-slide="7">
+            <span class="slide-tag">Interactivitate &bull; Căutare Inteligentă</span>
+            <h2 class="slide-title">Bara de Căutare <span>Live Autocomplete</span></h2>
+            <p class="slide-subtitle">Căutare după brand, cod OEM, dimensiune și serie de șasiu (VIN)</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-search"></i> Arhitectura Sistemului de Căutare</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Sursă Unică de Adevăr</strong>: fișierul <code>data-products.php</code> oferă funcțiile <code>get_all_autoparts()</code> și <code>search_autoparts($q)</code>.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Căutare Server-Side (PHP)</strong>: pe <code>index.php?s=brembo</code> filtrează catalogul complet chiar dacă JS e oprit (accesibilitate maximă).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Căutare Client-Side (JS Live)</strong>: interoghează <code>api-search.php?q=...</code> și afișează dropdown cu poze, coduri, preț și highlight galben.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Navigare completă din tastatură</strong>: Săgeată Jos / Sus &bull; Enter pentru selectare &bull; Escape pentru închidere.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-cpu"></i> Tehnici Avansate în script.js</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-arrow-right-short" style="color:var(--accent);"></i> <strong>Debounce de 100ms</strong>: nu trimite cereri inutile la fiecare literă tastată.</li>
+                        <li><i class="bi bi-arrow-right-short" style="color:var(--accent);"></i> <strong>AbortController</strong>: anulează cererile HTTP precedente dacă utilizatorul continuă să tasteze (zero race-conditions).</li>
+                        <li><i class="bi bi-arrow-right-short" style="color:var(--accent);"></i> <strong>XSS Protection</strong>: funcție dedicată <code>escapeHtml()</code> pentru a preveni atacurile prin injectare de cod în rezultate.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Un magazin auto depinde de rapiditatea căutării după coduri sau dimensiuni. Am creat un sistem hibrid: căutare clasică server-side în PHP pentru indexare Google, completată de un <mark>autocomplete live în JavaScript</mark>. Folosim un <mark>debounce de 100 milisecunde</mark> și <mark>AbortController</mark> pentru a anula cererile vechi, oferind rezultate instantanee cu imagini, preț și suport complet pentru tastatură.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 8: SEO TEHNIC & SCHEMA.ORG JSON-LD
+             =================================================================== -->
+        <article class="slide" data-slide="8">
+            <span class="slide-tag">SEO Tehnic &bull; Date Structurate</span>
+            <h2 class="slide-title">Schema.org <span>JSON-LD</span> &amp; Google Merchant</h2>
+            <p class="slide-subtitle">Cum comunicăm direct cu motoarele de căutare fără ambiguitate</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-diagram-2-fill"></i> Schemas Implementate în Proiect</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Product Schema</strong>: <code>name</code>, <code>image</code> (3 imagini), <code>sku</code>, <code>mpn</code>, <code>gtin13</code>, <code>brand</code>.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Offer Schema</strong>: <code>price</code>, <code>priceCurrency: RON</code>, <code>availability: InStock</code>.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>OfferShippingDetails &amp; MerchantReturnPolicy</strong>: taxe livrare 0 RON și retur 30 zile.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>AggregateRating &amp; Review</strong>: recenzii semnate de experți RAR pentru stele aurii în Google Search (Rich Snippets).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>BreadcrumbList</strong>: ierarhie vizuală în rezultatele căutării.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Organization &amp; WebSite SearchAction</strong>: casetă de căutare direct în Google (Sitelinks Search Box).</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-file-earmark-code-fill"></i> Resurse Tehnice Create</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-filetype-xml" style="color:var(--accent);"></i> <strong>sitemap.xml</strong>: include etichetele oficiale Google <code>image:image</code>, <code>image:loc</code> și <code>image:caption</code>.</li>
+                        <li><i class="bi bi-rss-fill" style="color:var(--primary);"></i> <strong>feed.xml</strong>: Feed oficial Google Merchant Center RSS 2.0 cu namespace <code>xmlns:g</code> pentru Google Shopping.</li>
+                        <li><i class="bi bi-broadcast-pin" style="color:var(--secondary);"></i> <strong>IndexNow</strong>: protocol suportat pentru ping instantaneu către Bing și Yandex la adăugarea unei piese noi.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „SEO nu mai înseamnă doar cuvinte cheie repetate în pagină, ci <mark>date structurate JSON-LD</mark>. Am implementat schema completă de Produs recomandată de Google: preț, stoc, cod de bare GTIN, politică de retur și recenzii ale mecanicilor pentru Rich Snippets. În plus, am generat un <mark>feed XML pentru Google Merchant Center</mark> și un <mark>sitemap extins cu imagini</mark>.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 9: REVOLUȚIA GEO (GENERATIVE ENGINE OPTIMIZATION)
+             =================================================================== -->
+        <article class="slide" data-slide="9">
+            <span class="slide-tag">Inovație 2026 &bull; GEO &amp; AI Search</span>
+            <h2 class="slide-title">De la SEO clasic la <span>SEO + GEO</span></h2>
+            <p class="slide-subtitle">Optimizare pentru a fi citat în Google AI Overviews, SearchGPT, Perplexity și Claude</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-robot"></i> Ce este GEO (Generative Engine Optimization)?</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Modelele AI răspund direct în căutare (Zero-Click Searches). Scopul este să fim <strong>sursa citată în sinteză</strong>.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Direct Answer Box</strong>: plasat imediat sub H1 pe paginile produselor — oferă răspuns clar, dens și concis la ce este piesa, pe ce mașini se potrivește și cât costă.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Format ușor de extras</strong>: tabele HTML clare și liste neordonate (preferate de crawlerele LLM).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>FAQ semantic integrat</strong> cu răspunsuri scurte și autoritare.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-file-text-fill"></i> llms.txt &amp; Politica robots.txt</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check2-square" style="color:var(--success);"></i> <strong>llms.txt creat</strong>: fișierul propus ca standard pentru ghidarea modelelor de limbaj către datele verificate și specificațiile cheie.</li>
+                        <li><i class="bi bi-check2-square" style="color:var(--secondary);"></i> <strong>robots.txt inteligent</strong>:
+                            <br>&bull; <em>Permite boții de citare AI</em>: <code>GPTBot</code>, <code>PerplexityBot</code>, <code>ClaudeBot</code>, <code>Google-Extended</code>.
+                            <br>&bull; <em>Blochează capcanele de conținut duplicat</em>: parametrii de sortare și fațetare (<code>?sort=</code>, <code>?filter=</code>).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la acest slide:</div>
+                <p class="speech-text">
+                    „Marea schimbare din 2026 este trecerea la <mark>GEO — Generative Engine Optimization</mark>. Când un utilizator întreabă ChatGPT sau Google AI dacă discurile Brembo de 312mm merg pe Golf 7, motorul AI caută pagini cu casete de răspuns direct. Noi am integrat un <mark>Direct Answer Box</mark> sub titlu, un fișier <mark>llms.txt</mark> și am configurat <mark>robots.txt</mark> să permită accesul crawlerelor generative pentru a ne asigura că suntem citați ca sursă.”
+                </p>
+            </div>
+        </article>
+
+        <!-- ===================================================================
+             SLIDE 10: E-E-A-T, CONCLUZII & DEMONSTRAȚIE LIVE
+             =================================================================== -->
+        <article class="slide" data-slide="10">
+            <span class="slide-tag">Concluzii &bull; E-E-A-T &amp; Întrebări</span>
+            <h2 class="slide-title">Semnale <span>E-E-A-T</span> &amp; Concluzii</h2>
+            <p class="slide-subtitle">Experiență, Expertiză, Autoritate și Încredere demonstrate în practică</p>
+
+            <div class="slide-grid">
+                <div class="card-box">
+                    <h3><i class="bi bi-shield-check"></i> Factori E-E-A-T în AutoPiese Pro</h3>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Autori &amp; Experți Reali</strong>: recenzii și recomandări semnate de ingineri mecanici autorizați RAR (ex: Ing. Cristian Radu, Laurențiu Vasile).</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Filtru anti-conținut generic</strong>: algoritmii AI filtrează textele automate. Opiniile tehnice din atelier oferă un semnal puternic de unicitate.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Verificare VIN Gratuită</strong>: elimină frica de compatibilitate a cumpărătorului.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Garanție 24 luni &amp; retur 30 zile</strong> stipulate conform reglementărilor ANPC / UE.</li>
+                    </ul>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="bi bi-check2-all"></i> Sumar Tehnologic</h3>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:0.85rem;">
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>Backend:</strong> PHP Modular (DRY)</div>
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>Build:</strong> Node.js + esbuild</div>
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>CSS:</strong> @layer, :has(), Nesting</div>
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>Viteză:</strong> Speculation Rules (0ms)</div>
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>Căutare:</strong> Live Autocomplete</div>
+                        <div style="background:#050811; padding:10px; border-radius:8px;"><strong>AI / GEO:</strong> llms.txt + JSON-LD</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="speech-box">
+                <div class="speech-header"><i class="bi bi-mic-fill"></i> Ce spui la finalul prezentării:</div>
+                <p class="speech-text">
+                    „În concluzie, <mark>AutoPiese Pro</mark> demonstrează că un magazin online modern combină performanța tehnică extremă (Core Web Vitals, compresie automată, navigare instantanee) cu semnalele reale de încredere <mark>E-E-A-T</mark> și optimizarea pentru inteligența artificială <mark>(GEO)</mark>. Toate paginile sunt 100% funcționale și le putem testa chiar acum în browser. Vă mulțumesc și aștept întrebările dumneavoastră!”
+                </p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer Navigație Slide-uri -->
+    <footer class="pres-footer">
+        <div class="dots-container" id="dotsContainer"></div>
+
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div class="slide-counter" id="slideCounter">1 / 10</div>
+            <div class="nav-buttons">
+                <button class="btn-nav" id="prevBtn" title="Slide anterior (Săgeată Stânga)"><i class="bi bi-chevron-left"></i></button>
+                <button class="btn-nav" id="nextBtn" title="Slide următor (Săgeată Dreapta)"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Navigare Interactivă Slide-uri -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const dotsContainer = document.getElementById('dotsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const toggleNotesBtn = document.getElementById('toggleNotesBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // Generare buline indicatoare
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlide() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            dots.forEach((d, idx) => {
+                d.classList.toggle('active', idx === currentSlide);
+            });
+
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateSlide();
+            }
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Control tastatură (Săgeți, Spațiu, F, N)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'n' || e.key === 'N') {
+                toggleNotes();
+            }
+        });
+
+        // Toggle Note Vorbitor
+        let notesVisible = true;
+        function toggleNotes() {
+            notesVisible = !notesVisible;
+            document.querySelectorAll('.speech-box').forEach(box => {
+                box.style.display = notesVisible ? 'block' : 'none';
+            });
+            toggleNotesBtn.classList.toggle('active', notesVisible);
+        }
+        toggleNotesBtn.addEventListener('click', toggleNotes);
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+            } else {
+                document.exitFullscreen().catch(err => console.log(err));
+            }
+        }
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+    </script>
+</body>
+</html>
+

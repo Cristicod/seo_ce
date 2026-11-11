@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Pagina Principală Catalog -->
+  <url>
+    <loc>http://localhost:8000/seo/index.php</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Pagina Produs 1: Discuri Frână Față Brembo Max 312mm -->
+  <url>
+    <loc>http://localhost:8000/seo/disc-frana-brembo.php</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/disc-brembo-front.svg</image:loc>
+      <image:title>Set 2 Discuri de Frână Față Ventilate Brembo Max 312mm</image:title>
+      <image:caption>Vedere frontală suprafață de frecare perforată și canelată Brembo Max</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/disc-brembo-angle.svg</image:loc>
+      <image:title>Canale de ventilație interioare PVT Brembo</image:title>
+      <image:caption>Vedere unghi 45 grade canale stâlpi ventilație</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/disc-brembo-side.svg</image:loc>
+      <image:title>Profil tehnic și cote disc frână 312mm</image:title>
+      <image:caption>Diametru 312mm grosime 25mm înălțime 49.5mm</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Pagina Produs 2: Kit Ambreiaj Sachs cu Volantă 240mm -->
+  <url>
+    <loc>http://localhost:8000/seo/kit-ambreiaj-sachs.php</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/kit-sachs-front.svg</image:loc>
+      <image:title>Kit Ambreiaj Complet cu Volantă Masă Dublă Sachs 240mm</image:title>
+      <image:caption>Kit ambreiaj 4 piese cu volantă bimasa placă disc și rulment hidraulic</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/kit-sachs-angle.svg</image:loc>
+      <image:title>Mecanism ambreiaj Sachs arcuri torsiune</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>http://localhost:8000/seo/images/kit-sachs-side.svg</image:loc>
+      <image:title>Profil ansamblu volantă masă dublă și placă presiune</image:title>
+    </image:image>
+  </url>
+
+</urlset>
+

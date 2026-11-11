@@ -1,0 +1,42 @@
+# ==============================================================================
+# ROBOTS.TXT — STRATEGIE SEO + GEO (Generative Engine Optimization 2026)
+# ==============================================================================
+
+# 1. MOTOARE DE CĂUTARE CLASICE (Google, Bing, Yahoo, DuckDuckGo)
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+Allow: /
+# Prevenire capcane filtre multi-fațetate (Faceted Navigation) & parametri duplicate
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*dir=
+Disallow: /*?*page=*&
+
+# 2. CRAWLERE AI & GEO (Permise pentru citare în ChatGPT, Gemini, Perplexity, Claude)
+# Permițând acești boți, conținutul tău este citat ca sursă în AI Overviews & SearchGPT
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+Allow: /
+
+# 3. DIRECTIVE GENERALE PENTRU TOȚI CEILALȚI CRAWLERI
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /cart.php
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# 4. RESURSE ESENȚIALE PENTRU INDEXARE & MOTOARE AI
+Sitemap: http://localhost:8000/seo/sitemap.xml
+
+# Standardul emergent llms.txt pentru modele generative (ChatGPT, Perplexity, Claude)
+# Reference: https://llmstxt.org/
+# LLMs-Txt: http://localhost:8000/seo/llms.txt
+

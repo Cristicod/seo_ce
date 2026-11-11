@@ -1,0 +1,881 @@
+/* =============================================================================
+   AUTOPIESE PRO — CSS Modern & Optimizat (Mobile-First, Core Web Vitals)
+   Tehnologii: CSS Layers (@layer), CSS Nesting, :has(), Container Queries, <dialog>
+   ============================================================================= */
+
+@layer reset, base, layout, components, utilities;
+
+@layer reset {
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+@layer base {
+    :root {
+        --ap-primary:      #ef4444;   /* Roșu motorsport */
+        --ap-primary-dark: #dc2626;
+        --ap-secondary:    #2563eb;   /* Albastru tehnic OEM */
+        --ap-accent:       #f59e0b;   /* Galben accent */
+        --ap-dark:         #0f172a;   /* Slate 900 */
+        --ap-dark-surface: #1e293b;   /* Slate 800 */
+        --ap-text:         #0f172a;
+        --ap-text-muted:   #64748b;
+        --ap-border:       #e2e8f0;
+        --ap-bg:           #f8fafc;
+        --ap-card-bg:      #ffffff;
+        --ap-radius:       12px;
+        --ap-shadow:       0 4px 20px rgba(0,0,0,0.06);
+        --ap-transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: var(--ap-bg);
+        color: var(--ap-text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@layer layout {
+    /* =========================================================================
+       NAVBAR
+       ========================================================================= */
+    .ap-navbar {
+        background: var(--ap-dark);
+        padding: 14px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        will-change: transform;
+    }
+
+    .ap-brand {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: -0.5px;
+
+        & span { color: var(--ap-primary); }
+        & i { color: var(--ap-primary); font-size: 1.4rem; }
+    }
+
+    .ap-nav-link {
+        color: rgba(255,255,255,0.7) !important;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 8px;
+        padding: 8px 14px !important;
+        transition: color var(--ap-transition), background var(--ap-transition);
+
+        &:hover, &.active {
+            color: #fff !important;
+            background: rgba(255,255,255,0.12);
+        }
+    }
+
+    /* =========================================================================
+       HERO
+       ========================================================================= */
+    .ap-hero {
+        background: linear-gradient(135deg, #0b1120 0%, #1e293b 50%, #0f172a 100%);
+        color: #fff;
+        padding: 70px 0 60px;
+        overflow: hidden;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 450px; height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -80px;
+            width: 350px; height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+    }
+
+    .ap-hero-title {
+        font-size: clamp(1.9rem, 5vw, 3.1rem);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 16px;
+
+        & span {
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    .ap-hero-sub {
+        font-size: clamp(0.95rem, 2vw, 1.15rem);
+        color: rgba(255,255,255,0.72);
+        max-width: 540px;
+        margin-bottom: 26px;
+    }
+
+    /* =========================================================================
+       FOOTER
+       ========================================================================= */
+    .ap-footer {
+        background: var(--ap-dark);
+        color: rgba(255,255,255,0.55);
+        padding: 55px 0 0;
+        margin-top: 70px;
+        font-size: 0.88rem;
+    }
+
+    .ap-footer-brand {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #fff;
+        & span { color: var(--ap-primary); }
+    }
+
+    .ap-footer-desc {
+        color: rgba(255,255,255,0.55);
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    .ap-footer-heading {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    .ap-footer-links {
+        list-style: none;
+        padding: 0;
+
+        & li { margin-bottom: 8px; }
+        & a {
+            color: rgba(255,255,255,0.5);
+            transition: color var(--ap-transition);
+
+            &:hover { color: #fff; }
+        }
+    }
+
+    .ap-footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 22px 0;
+        margin-top: 40px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.45);
+    }
+}
+
+@layer components {
+    /* =========================================================================
+       BARĂ DE CĂUTARE & AUTOCOMPLETE LIVE
+       ========================================================================= */
+    .ap-search-wrapper {
+        position: relative;
+        flex: 1;
+        max-width: 440px;
+        min-width: 220px;
+    }
+
+    .ap-search-form {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .ap-search-icon {
+        position: absolute;
+        left: 14px;
+        color: #94a3b8;
+        font-size: 1rem;
+        pointer-events: none;
+        transition: color var(--ap-transition);
+    }
+
+    .ap-search-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+        font-size: 0.88rem;
+        border-radius: 25px;
+        padding: 8px 36px 8px 38px;
+        transition: all var(--ap-transition);
+        outline: none;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.84rem;
+        }
+
+        &:focus {
+            background: #ffffff;
+            color: var(--ap-text);
+            border-color: var(--ap-primary);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+        }
+    }
+
+    /* CSS :has() — Când inputul are focus, iconița își schimbă culoarea */
+    .ap-search-form:has(.ap-search-input:focus) .ap-search-icon {
+        color: var(--ap-primary);
+    }
+
+    .ap-search-clear {
+        position: absolute;
+        right: 12px;
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        font-size: 1rem;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+
+        &:hover { color: var(--ap-primary); }
+    }
+
+    .ap-search-dropdown {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+        border: 1px solid var(--ap-border);
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 9999;
+        display: none;
+
+        &.active {
+            display: block;
+            animation: apSearchSlide 0.18s ease-out;
+        }
+    }
+
+    @keyframes apSearchSlide {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .ap-search-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-bottom: 1px solid #f1f5f9;
+        text-decoration: none;
+        color: var(--ap-text);
+        transition: background var(--ap-transition);
+
+        &:last-child { border-bottom: none; }
+        &:hover, &.highlighted { background: #fef2f2; }
+    }
+
+    .ap-search-thumb {
+        width: 44px;
+        height: 44px;
+        background: #f1f5f9;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+        padding: 3px;
+        border: 1px solid var(--ap-border);
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .ap-search-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .ap-search-name {
+        font-size: 0.86rem;
+        font-weight: 700;
+        color: var(--ap-text);
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ap-search-meta {
+        font-size: 0.74rem;
+        color: var(--ap-text-muted);
+    }
+
+    .ap-search-price {
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: var(--ap-primary);
+        white-space: nowrap;
+    }
+
+    .ap-search-empty {
+        padding: 20px;
+        text-align: center;
+        color: var(--ap-text-muted);
+        font-size: 0.86rem;
+    }
+
+    .ap-search-footer {
+        padding: 9px 14px;
+        background: #f8fafc;
+        border-top: 1px solid var(--ap-border);
+        font-size: 0.78rem;
+        text-align: center;
+        color: var(--ap-primary);
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover { background: #fef2f2; }
+    }
+
+    /* =========================================================================
+       CARD PRODUS (Catalog)
+       ========================================================================= */
+    .ap-product-card {
+        background: var(--ap-card-bg);
+        border-radius: var(--ap-radius);
+        border: 1px solid var(--ap-border);
+        overflow: hidden;
+        transition: transform var(--ap-transition), box-shadow var(--ap-transition);
+        contain: layout;
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+        }
+    }
+
+    .ap-card-img {
+        background: #f1f5f9;
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.35s ease;
+        }
+    }
+
+    .ap-product-card:hover .ap-card-img img {
+        transform: scale(1.06);
+    }
+
+    .ap-card-badge {
+        position: absolute;
+        top: 12px; left: 12px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 2;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .ap-card-body {
+        padding: 18px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ap-card-brand {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--ap-text-muted);
+        margin-bottom: 4px;
+    }
+
+    .ap-card-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ap-text);
+        margin-bottom: 10px;
+        line-height: 1.35;
+        flex: 1;
+    }
+
+    .ap-card-specs {
+        font-size: 0.82rem;
+        color: var(--ap-text-muted);
+        margin-bottom: 14px;
+        line-height: 1.6;
+    }
+
+    .ap-card-price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+    }
+
+    .ap-price {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--ap-primary);
+    }
+
+    .ap-price-old {
+        font-size: 0.85rem;
+        color: var(--ap-text-muted);
+        text-decoration: line-through;
+        margin-left: 6px;
+    }
+
+    .ap-discount {
+        background: #fef2f2;
+        color: #991b1b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 6px;
+    }
+
+    .ap-card-btn {
+        display: block;
+        text-align: center;
+        background: var(--ap-primary);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 11px;
+        border-radius: 8px;
+        transition: background var(--ap-transition), transform var(--ap-transition);
+        border: none;
+        width: 100%;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--ap-primary-dark);
+            transform: translateY(-1px);
+        }
+    }
+
+    /* =========================================================================
+       GALERIE PRODUS (Pagină individuală)
+       ========================================================================= */
+    .ap-product-gallery {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .ap-gallery-main {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid var(--ap-border);
+        border-radius: var(--ap-radius);
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        cursor: zoom-in;
+        transition: box-shadow var(--ap-transition);
+
+        &:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+
+            & .ap-zoom-hint {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .ap-main-img-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #f8fafc, #edf2f7);
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 18px;
+            transition: opacity 0.25s ease, transform 0.3s ease;
+            will-change: opacity, transform;
+        }
+    }
+
+    .ap-gallery-main:hover .ap-main-img-wrapper img {
+        transform: scale(1.03);
+    }
+
+    .ap-zoom-hint {
+        position: absolute;
+        bottom: 14px;
+        right: 14px;
+        background: rgba(15, 23, 42, 0.85);
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        backdrop-filter: blur(4px);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        opacity: 0.9;
+        transform: translateY(2px);
+        transition: all 0.2s ease;
+        pointer-events: none;
+    }
+
+    .ap-thumbnails {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .ap-thumb-btn {
+        position: relative;
+        background: #ffffff;
+        border: 2px solid var(--ap-border);
+        border-radius: 10px;
+        padding: 6px;
+        cursor: pointer;
+        transition: all var(--ap-transition);
+        aspect-ratio: 4 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        &:hover {
+            border-color: var(--ap-primary);
+            transform: translateY(-2px);
+        }
+
+        &.active {
+            border-color: var(--ap-primary);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+        }
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+    }
+
+    .ap-thumb-label {
+        position: absolute;
+        bottom: 4px;
+        left: 4px;
+        right: 4px;
+        background: rgba(15, 23, 42, 0.75);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 4px;
+        padding: 2px 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* =========================================================================
+       LIGHTBOX FOLOSIND <dialog> HTML5 NATIV
+       ========================================================================= */
+    .ap-lightbox {
+        border: none;
+        background: transparent;
+        padding: 0;
+        max-width: 100vw;
+        max-height: 100vh;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        /* Suport pentru browser vechi dacă nu deschide cu .showModal() */
+        &:not([open]) {
+            display: none;
+        }
+
+        &::backdrop {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            animation: apBackdropFade 0.2s ease-out;
+        }
+    }
+
+    @keyframes apBackdropFade {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    .ap-lightbox-header {
+        position: absolute;
+        top: 18px;
+        left: 24px;
+        right: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .ap-lightbox-title {
+        color: #ffffff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .ap-lightbox-counter {
+        background: rgba(255, 255, 255, 0.15);
+        color: #cbd5e1;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 14px;
+        margin-left: 12px;
+    }
+
+    .ap-lightbox-close {
+        background: rgba(255, 255, 255, 0.12);
+        border: none;
+        color: #ffffff;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all var(--ap-transition);
+
+        &:hover {
+            background: var(--ap-primary);
+            transform: rotate(90deg);
+        }
+    }
+
+    .ap-lightbox-stage {
+        position: relative;
+        max-width: 90vw;
+        max-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ap-lightbox-img {
+        max-width: 88vw;
+        max-height: 78vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
+        transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .ap-lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.14);
+        border: none;
+        color: #ffffff;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all var(--ap-transition);
+        z-index: 10;
+
+        &:hover {
+            background: var(--ap-primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+    }
+    .ap-lightbox-prev { left: 24px; }
+    .ap-lightbox-next { right: 24px; }
+
+    .ap-lightbox-caption {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        text-align: center;
+        color: #cbd5e1;
+        font-size: 0.92rem;
+        font-weight: 500;
+    }
+
+    /* =========================================================================
+       GEO DIRECT ANSWER BOX
+       ========================================================================= */
+    .ap-geo-box {
+        background: #f8fafc;
+        border: 1.5px solid #cbd5e1;
+        border-left: 4px solid var(--ap-primary);
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+
+    .ap-product-title {
+        font-size: clamp(1.5rem, 4vw, 2.1rem);
+        font-weight: 800;
+        color: var(--ap-text);
+        line-height: 1.25;
+        margin-bottom: 12px;
+    }
+
+    .ap-price-block {
+        background: var(--ap-bg);
+        border: 1px solid var(--ap-border);
+        border-radius: var(--ap-radius);
+        padding: 18px 20px;
+        margin-bottom: 20px;
+    }
+
+    .ap-price-big {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--ap-primary);
+        line-height: 1;
+    }
+
+    .ap-specs-table td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--ap-border);
+        font-size: 0.9rem;
+
+        &:first-child {
+            font-weight: 600;
+            color: var(--ap-text);
+            background: var(--ap-bg);
+            width: 38%;
+        }
+    }
+
+    .ap-ext-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--ap-primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1.5px solid var(--ap-primary);
+        padding: 10px 18px;
+        border-radius: 8px;
+        transition: all var(--ap-transition);
+
+        &:hover {
+            background: var(--ap-primary);
+            color: #fff;
+        }
+    }
+
+    .ap-btn-buy {
+        background: linear-gradient(135deg, var(--ap-primary), var(--ap-primary-dark));
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 14px 28px;
+        cursor: pointer;
+        transition: all var(--ap-transition);
+        box-shadow: 0 6px 18px rgba(239,68,68,0.35);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(239,68,68,0.45);
+        }
+    }
+
+    .ap-speed-box {
+        background: linear-gradient(135deg, #0b1120, #1e293b);
+        color: #fff;
+        border-radius: var(--ap-radius);
+        padding: 24px;
+    }
+}
+
+@layer utilities {
+    @media (min-width: 768px) {
+        .ap-hero { padding: 90px 0 75px; }
+    }
+    @media (min-width: 992px) {
+        .ap-hero { padding: 110px 0 90px; }
+    }
+}

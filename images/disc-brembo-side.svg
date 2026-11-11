@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="metalSideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="30%" stop-color="#f8fafc"/>
+      <stop offset="65%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <filter id="sideShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="25" stdDeviation="30" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f1f5f9"/>
+
+  <!-- Floor shadow -->
+  <ellipse cx="600" cy="590" rx="460" ry="25" fill="#000" opacity="0.2" filter="blur(16px)"/>
+
+  <g filter="url(#sideShadow)">
+    <!-- Central Hub Drum (Pălăria discului profil lateral) -->
+    <path d="M 400 520 
+             L 400 370 
+             Q 400 350 420 350
+             L 780 350 
+             Q 800 350 800 370
+             L 800 520 Z" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+
+    <!-- Disc Left Wing (Friction Ring Left) -->
+    <!-- Top friction surface -->
+    <rect x="150" y="470" width="250" height="12" rx="2" fill="url(#metalSideGrad)" stroke="#475569" stroke-width="1.5"/>
+    <!-- Ventilation air gap -->
+    <rect x="152" y="482" width="246" height="26" fill="#0f172a"/>
+    <!-- Internal vanes visible in gap -->
+    <rect x="180" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="220" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="260" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="300" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="340" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="380" y="482" width="8" height="26" fill="#475569"/>
+    <!-- Bottom friction surface -->
+    <rect x="150" y="508" width="250" height="12" rx="2" fill="url(#metalSideGrad)" stroke="#475569" stroke-width="1.5"/>
+
+    <!-- Disc Right Wing (Friction Ring Right) -->
+    <!-- Top friction surface -->
+    <rect x="800" y="470" width="250" height="12" rx="2" fill="url(#metalSideGrad)" stroke="#475569" stroke-width="1.5"/>
+    <!-- Ventilation air gap -->
+    <rect x="802" y="482" width="246" height="26" fill="#0f172a"/>
+    <!-- Internal vanes visible in gap -->
+    <rect x="820" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="860" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="900" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="940" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="980" y="482" width="8" height="26" fill="#475569"/>
+    <rect x="1020" y="482" width="8" height="26" fill="#475569"/>
+    <!-- Bottom friction surface -->
+    <rect x="800" y="508" width="250" height="12" rx="2" fill="url(#metalSideGrad)" stroke="#475569" stroke-width="1.5"/>
+
+    <!-- Center Bore Hole cutaway -->
+    <rect x="550" y="348" width="100" height="16" fill="#020617"/>
+  </g>
+
+  <!-- Technical Measurement Lines & Dimensions (SEO Schemă Tehnică) -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" stroke="#dc2626" stroke-width="1.8">
+    <!-- Cota 1: Diametru Total (312 mm) -->
+    <line x1="150" y1="560" x2="150" y2="600"/>
+    <line x1="1050" y1="560" x2="1050" y2="600"/>
+    <line x1="150" y1="585" x2="1050" y2="585"/>
+    <polygon points="150,585 165,580 165,590" fill="#dc2626"/>
+    <polygon points="1050,585 1035,580 1035,590" fill="#dc2626"/>
+
+    <rect x="520" y="565" width="160" height="40" rx="6" fill="#0f172a"/>
+    <text x="600" y="590" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" stroke="none">Ø 312 mm (Diametru)</text>
+
+    <!-- Cota 2: Grosime Disc (25 mm) -->
+    <line x1="80" y1="470" x2="135" y2="470"/>
+    <line x1="80" y1="520" x2="135" y2="520"/>
+    <line x1="100" y1="470" x2="100" y2="520"/>
+    <polygon points="100,470 95,482 105,482" fill="#dc2626"/>
+    <polygon points="100,520 95,508 105,508" fill="#dc2626"/>
+
+    <rect x="20" y="475" width="70" height="36" rx="6" fill="#0f172a"/>
+    <text x="55" y="498" font-size="13" font-weight="700" fill="#ef4444" text-anchor="middle" stroke="none">25 mm</text>
+
+    <!-- Cota 3: Înălțime Totală (49.5 mm) -->
+    <line x1="1065" y1="350" x2="1120" y2="350"/>
+    <line x1="1065" y1="520" x2="1120" y2="520"/>
+    <line x1="1095" y1="350" x2="1095" y2="520"/>
+    <polygon points="1095,350 1090,365 1100,365" fill="#dc2626"/>
+    <polygon points="1095,520 1090,505 1100,505" fill="#dc2626"/>
+
+    <rect x="1105" y="420" width="80" height="36" rx="6" fill="#0f172a"/>
+    <text x="1145" y="443" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" stroke="none">49.5 mm</text>
+  </g>
+
+  <g transform="translate(60, 60)">
+    <rect width="320" height="42" rx="8" fill="#0f172a" opacity="0.92"/>
+    <text x="16" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="700" fill="#ef4444">Vedere Profil Tehnic &amp; Cote (312mm)</text>
+  </g>
+</svg>
+

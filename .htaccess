@@ -1,0 +1,21 @@
+# ==============================================================================
+# CONFIGURARE APACHE: URL REWRITING PENTRU SEO (Prietenoase pentru motoare de căutare)
+# ==============================================================================
+
+# 1. Activăm modulul de rescriere URL al serverului Apache (mod_rewrite)
+RewriteEngine On
+
+# 2. CONDIȚIE: Dacă resursa cerută este un fișier fizic real (ex: style.css, script.js),
+# semnul "!" înseamnă NU. Deci: "Dacă NU este un fișier existent..."
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# 3. CONDIȚIE: "Dacă NU este un folder existent pe disc..."
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 4. REGULA DE RESCRIERE:
+# ^([^/]+)/?$  -> Expresie regulată: captează slug-ul produsului (orice fără slash)
+# index.php?produs=$1 -> Trimite slug-ul capturat ($1) ca parametru GET către index.php
+# [L,QSA]      -> Flag-uri Apache:
+#                 L   = Last rule (oprește procesarea altor reguli dacă s-a potrivit)
+#                 QSA = Query String Append (păstrează și alți parametri dacă există)
+RewriteRule ^([^/]+)/?$ index.php?produs=$1 [L,QSA]

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="angleRotorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="30%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <filter id="angleShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="-10" dy="30" stdDeviation="35" flood-color="#0f172a" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f1f5f9"/>
+
+  <!-- Shadow below part in perspective -->
+  <ellipse cx="600" cy="720" rx="460" ry="60" fill="#000" opacity="0.2" filter="blur(20px)"/>
+
+  <g filter="url(#angleShadow)">
+    <!-- Lower Rotor Plate (Back surface) in Perspective -->
+    <ellipse cx="600" cy="540" rx="420" ry="170" fill="#334155" stroke="#1e293b" stroke-width="3"/>
+
+    <!-- Ventilated Vanes (Canale de răcire interioare între plăci) -->
+    <g stroke="#0f172a" stroke-width="5" fill="none">
+      <!-- Vanes arranged radial curve -->
+      <path d="M 230 520 Q 250 500 270 480"/>
+      <path d="M 260 550 Q 290 530 320 505"/>
+      <path d="M 310 580 Q 345 555 380 525"/>
+      <path d="M 370 610 Q 410 575 450 540"/>
+      <path d="M 440 635 Q 485 595 530 550"/>
+      <path d="M 520 650 Q 565 605 610 555"/>
+      <path d="M 600 655 Q 645 605 690 555"/>
+      <path d="M 680 650 Q 725 595 770 545"/>
+      <path d="M 760 630 Q 800 580 840 530"/>
+      <path d="M 830 600 Q 865 555 900 510"/>
+      <path d="M 890 565 Q 920 530 945 490"/>
+      <path d="M 940 525 Q 960 495 980 465"/>
+    </g>
+
+    <!-- Upper Rotor Plate (Front friction surface) in Perspective -->
+    <ellipse cx="600" cy="500" rx="415" ry="165" fill="url(#angleRotorGrad)" stroke="#64748b" stroke-width="2"/>
+    <ellipse cx="600" cy="500" rx="400" ry="155" fill="none" stroke="#f8fafc" stroke-width="1.5" opacity="0.7"/>
+    <ellipse cx="600" cy="500" rx="350" ry="135" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity="0.6"/>
+    <ellipse cx="600" cy="500" rx="300" ry="115" fill="none" stroke="#f8fafc" stroke-width="1.5" opacity="0.7"/>
+
+    <!-- Perspective Holes on Friction Band -->
+    <g fill="#0f172a" stroke="#cbd5e1" stroke-width="1">
+      <ellipse cx="300" cy="500" rx="7" ry="3"/>
+      <ellipse cx="360" cy="460" rx="7" ry="3"/>
+      <ellipse cx="440" cy="430" rx="7" ry="3"/>
+      <ellipse cx="540" cy="415" rx="7" ry="3"/>
+      <ellipse cx="650" cy="415" rx="7" ry="3"/>
+      <ellipse cx="750" cy="430" rx="7" ry="3"/>
+      <ellipse cx="830" cy="460" rx="7" ry="3"/>
+      <ellipse cx="890" cy="500" rx="7" ry="3"/>
+      <ellipse cx="820" cy="545" rx="7" ry="3"/>
+      <ellipse cx="720" cy="570" rx="7" ry="3"/>
+      <ellipse cx="610" cy="580" rx="7" ry="3"/>
+      <ellipse cx="490" cy="575" rx="7" ry="3"/>
+      <ellipse cx="380" cy="550" rx="7" ry="3"/>
+    </g>
+
+    <!-- Raised Center Hub / Hat in Perspective -->
+    <!-- Hub Cylinder Walls -->
+    <path d="M 390 480 
+             L 390 410 
+             A 210 80 0 0 1 810 410 
+             L 810 480 
+             A 210 80 0 0 1 390 480 Z" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+
+    <!-- Hub Top Flat Face -->
+    <ellipse cx="600" cy="410" rx="210" ry="80" fill="#0f172a" stroke="#475569" stroke-width="2.5"/>
+
+    <!-- Center Bore in Perspective -->
+    <ellipse cx="600" cy="410" rx="60" ry="24" fill="#020617" stroke="#cbd5e1" stroke-width="2"/>
+
+    <!-- 5 Bolt Holes in Perspective -->
+    <ellipse cx="600" cy="350" rx="15" ry="6" fill="#020617" stroke="#cbd5e1" stroke-width="1.8"/>
+    <ellipse cx="715" cy="385" rx="15" ry="6" fill="#020617" stroke="#cbd5e1" stroke-width="1.8"/>
+    <ellipse cx="670" cy="445" rx="15" ry="6" fill="#020617" stroke="#cbd5e1" stroke-width="1.8"/>
+    <ellipse cx="530" cy="445" rx="15" ry="6" fill="#020617" stroke="#cbd5e1" stroke-width="1.8"/>
+    <ellipse cx="485" cy="385" rx="15" ry="6" fill="#020617" stroke="#cbd5e1" stroke-width="1.8"/>
+
+    <!-- Brembo Marking in Perspective -->
+    <text x="600" y="425" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="900" fill="#ef4444" text-anchor="middle" letter-spacing="2">brembo MAX</text>
+  </g>
+
+  <!-- Spec Callout: Canale de răcire interioare -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
+    <line x1="280" y1="560" x2="190" y2="650" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+    <circle cx="280" cy="560" r="4" fill="#ef4444"/>
+    <rect x="70" y="660" width="260" height="42" rx="6" fill="#0f172a"/>
+    <text x="200" y="686" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Canale Răcire PVT (Ventilate)</text>
+  </g>
+
+  <g transform="translate(60, 60)">
+    <rect width="300" height="42" rx="8" fill="#0f172a" opacity="0.92"/>
+    <text x="16" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="700" fill="#ef4444">Vedere Unghi (Canale Ventilație PVT)</text>
+  </g>
+</svg>
+

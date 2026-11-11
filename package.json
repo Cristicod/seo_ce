@@ -1,0 +1,28 @@
+{
+  "name": "autopiese-pro-seo-compressor",
+  "version": "2.0.0",
+  "description": "Compresie automată și ultra-rapidă pentru CSS și JS cu esbuild pentru AutoPiese Pro",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "dev": "node build.js --watch",
+    "compress": "node build.js",
+    "serve": "/Applications/MAMP/bin/php/php8.3.30/bin/php -S localhost:8000"
+  },
+  "keywords": [
+    "seo",
+    "geo",
+    "autopiese",
+    "minify",
+    "css",
+    "javascript",
+    "watch",
+    "esbuild"
+  ],
+  "author": "AutoPiese Pro Team",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
