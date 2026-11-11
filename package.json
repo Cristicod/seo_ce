@@ -24,8 +24,5 @@
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.28.2"
-  },
-  "dependencies": {
-    "pptxgenjs": "^4.0.1"
   }
 }
