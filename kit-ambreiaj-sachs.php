@@ -10,7 +10,7 @@ $meta_desc     = 'Cumpără Kit Ambreiaj complet cu Volantă Masă Dublă Sachs 
 $canonical_url = site_url('kit-ambreiaj-sachs.php');
 $og_type       = 'product';
 $og_image      = site_url('images/kit-sachs-front.svg');
-$og_price      = ['amount' => '2199.00', 'currency' => 'RON'];
+$og_price      = ['amount' => '2199.00', 'old_amount' => '2650.00', 'currency' => 'RON'];
 $active_page   = 'sachs';
 $prerender_urls = ['index.php', 'disc-frana-brembo.php'];
 $lightbox_title = 'Kit Ambreiaj Sachs 240mm (2290 601 050)';
@@ -48,6 +48,21 @@ $json_ld = '<script type="application/ld+json">
         "priceCurrency": "RON",
         "price": "2199.00",
         "priceValidUntil": "2027-12-31",
+        "valueAddedTaxIncluded": true,
+        "priceSpecification": [
+          {
+            "@type": "UnitPriceSpecification",
+            "priceType": "https://schema.org/ListPrice",
+            "price": "2650.00",
+            "priceCurrency": "RON"
+          },
+          {
+            "@type": "UnitPriceSpecification",
+            "priceType": "https://schema.org/SalePrice",
+            "price": "2199.00",
+            "priceCurrency": "RON"
+          }
+        ],
         "itemCondition": "https://schema.org/NewCondition",
         "availability": "https://schema.org/InStock",
         "seller": { "@type": "Organization", "name": "' . SITE_NAME . '" },
@@ -223,20 +238,45 @@ $kit_contents = [
                     <span class="small"><strong>Compatibilitate garantată:</strong> Trimite seria VIN și verificăm codul exact de cutie de viteze.</span>
                 </div>
 
-                <!-- Preț -->
-                <div class="ap-price-block mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <!-- Bloc Preț Optimizat Semantic cu Atribute Speciale SEO & Schema.org -->
+                <div class="ap-price-block mb-4" itemprop="offers" itemscope itemtype="https://schema.org/Offer" aria-label="Ofertă și preț kit ambreiaj">
+                    <!-- Atribute Schema.org de preț, monedă și valabilitate cerute de Google Merchant -->
+                    <link itemprop="url" href="<?= $canonical_url ?>">
                     <link itemprop="availability" href="https://schema.org/InStock">
+                    <link itemprop="itemCondition" href="https://schema.org/NewCondition">
                     <meta itemprop="priceCurrency" content="RON">
                     <meta itemprop="price" content="2199.00">
-                    <div class="d-flex align-items-baseline gap-3 mb-2">
-                        <span class="ap-price-big">2.199 <span style="font-size:1.2rem; font-weight:600;">Lei</span></span>
-                        <span style="font-size:1rem; color:var(--ap-text-muted); text-decoration:line-through;">2.650 Lei</span>
-                        <span class="ap-discount">Kit complet 4 piese</span>
+                    <meta itemprop="priceValidUntil" content="2027-12-31">
+                    <meta itemprop="valueAddedTaxIncluded" content="true">
+
+                    <!-- Specificare detaliată a prețului vechi de listă vs preț redus de vânzare -->
+                    <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/UnitPriceSpecification" class="visually-hidden">
+                        <meta itemprop="priceType" content="https://schema.org/ListPrice">
+                        <meta itemprop="price" content="2650.00">
+                        <meta itemprop="priceCurrency" content="RON">
                     </div>
-                    <p class="small text-muted mb-0">
-                        <i class="bi bi-truck me-1 text-primary" aria-hidden="true"></i>
-                        Livrare gratuită &bull; Garanție <?= WARRANTY_MONTHS ?> Luni &bull; Retur <?= RETURN_DAYS ?> Zile
-                    </p>
+
+                    <!-- Afișare vizuală cu elemente HTML5 semantice: <data>, <ins>, <del> -->
+                    <div class="d-flex align-items-baseline gap-3 mb-2 flex-wrap">
+                        <ins class="text-decoration-none" aria-label="Preț actual redus">
+                            <data class="ap-price-big" value="2199.00" itemprop="price">
+                                2.199 <span class="currency" style="font-size:1.2rem; font-weight:600;">Lei</span>
+                            </data>
+                        </ins>
+                        <del style="font-size:1rem; color:var(--ap-text-muted);" aria-label="Preț vechi de listă" data-old-price="2650.00">
+                            2.650 Lei
+                        </del>
+                        <span class="ap-discount" role="status" aria-label="Economie">
+                            Economisești 451 Lei (-17%)
+                        </span>
+                    </div>
+
+                    <!-- Detalii fiscale și logistice (TVA, livrare, valabilitate ofertă) -->
+                    <div class="d-flex align-items-center gap-3 text-muted small mt-2 pt-2 border-top flex-wrap">
+                        <span><i class="bi bi-shield-check text-success me-1"></i>Preț cu TVA inclus (19%)</span>
+                        <span><i class="bi bi-truck text-primary me-1"></i>Livrare gratuită 24h</span>
+                        <span><i class="bi bi-calendar-check text-warning me-1"></i>Preț garantat până la 31.12.2027</span>
+                    </div>
                 </div>
 
                 <div class="mb-4">

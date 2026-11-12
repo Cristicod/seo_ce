@@ -171,30 +171,39 @@ $prerender_urls = ['disc-frana-brembo.php', 'kit-ambreiaj-sachs.php'];
         <div class="row g-4">
             <?php foreach ($products as $p): ?>
             <div class="col-sm-6 col-lg-4">
-                <div class="ap-product-card h-100 d-flex flex-column">
+                <div class="ap-product-card h-100 d-flex flex-column" itemscope itemtype="https://schema.org/Product">
                     <div class="ap-card-img">
                         <span class="ap-card-badge <?= $p['badge_class'] ?> text-white"><?= $p['badge'] ?></span>
                         <img src="<?= $p['image'] ?>"
                              alt="<?= e($p['name']) ?>"
+                             itemprop="image"
                              width="320" height="210"
                              loading="lazy"
                              decoding="async">
                     </div>
                     <div class="ap-card-body d-flex flex-column flex-grow-1">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="ap-card-brand mb-0"><?= $p['brand'] ?></span>
-                            <span class="badge bg-light text-dark border small">Cod: <?= $p['code'] ?></span>
+                            <span class="ap-card-brand mb-0" itemprop="brand"><?= $p['brand'] ?></span>
+                            <span class="badge bg-light text-dark border small">Cod: <span itemprop="mpn"><?= $p['code'] ?></span></span>
                         </div>
-                        <h3 class="ap-card-title"><?= $p['name'] ?></h3>
-                        <p class="ap-card-specs flex-grow-1"><?= $p['specs'] ?></p>
-                        <div class="ap-card-price-row mt-auto">
+                        <h3 class="ap-card-title" itemprop="name"><?= $p['name'] ?></h3>
+                        <p class="ap-card-specs flex-grow-1" itemprop="description"><?= $p['specs'] ?></p>
+                        <div class="ap-card-price-row mt-auto" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="RON">
+                            <meta itemprop="priceValidUntil" content="2027-12-31">
+                            <link itemprop="availability" href="https://schema.org/InStock">
+                            <link itemprop="itemCondition" href="https://schema.org/NewCondition">
                             <div>
-                                <span class="ap-price"><?= $p['price'] ?> Lei</span>
-                                <span class="ap-price-old"><?= $p['price_old'] ?> Lei</span>
+                                <ins class="text-decoration-none" aria-label="Preț actual">
+                                    <data class="ap-price" value="<?= $p['price'] ?>.00" itemprop="price"><?= $p['price'] ?> Lei</data>
+                                </ins>
+                                <del class="ap-price-old" aria-label="Preț vechi de listă">
+                                    <data value="<?= $p['price_old'] ?>.00"><?= $p['price_old'] ?> Lei</data>
+                                </del>
                             </div>
                             <span class="ap-discount">În Stoc</span>
                         </div>
-                        <a href="<?= $p['url'] ?>" class="ap-card-btn mt-2">
+                        <a href="<?= $p['url'] ?>" class="ap-card-btn mt-2" itemprop="url">
                             <i class="bi bi-eye me-1"></i> Vezi Detalii &amp; Galerie
                         </a>
                     </div>

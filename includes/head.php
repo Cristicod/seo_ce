@@ -42,8 +42,19 @@ $json_ld        = $json_ld ?? '';
     <meta property="og:site_name" content="<?= SITE_NAME ?>">
     <meta property="og:image" content="<?= $og_image ?>">
 <?php if ($og_price): ?>
+    <!-- Atribute speciale Open Graph & Product Graph pentru preț, monedă și promoții -->
     <meta property="og:price:amount" content="<?= $og_price['amount'] ?>">
     <meta property="og:price:currency" content="<?= $og_price['currency'] ?>">
+    <meta property="product:price:amount" content="<?= $og_price['amount'] ?>">
+    <meta property="product:price:currency" content="<?= $og_price['currency'] ?>">
+    <?php if (!empty($og_price['old_amount'])): ?>
+    <meta property="product:original_price:amount" content="<?= $og_price['old_amount'] ?>">
+    <meta property="product:original_price:currency" content="<?= $og_price['currency'] ?>">
+    <meta property="product:sale_price:amount" content="<?= $og_price['amount'] ?>">
+    <meta property="product:sale_price:currency" content="<?= $og_price['currency'] ?>">
+    <?php endif; ?>
+    <meta property="product:availability" content="in stock">
+    <meta property="product:condition" content="new">
 <?php endif; ?>
 
     <!-- 6. Twitter Card (optimizat pentru partajare pe rețeaua X / Twitter) -->
